@@ -12,7 +12,7 @@ before_install:
   - echo Downloading GlassFish
   - wget http://download.java.net/glassfish/4.0/release/glassfish-4.0.zip
   - echo Unzipping GlassFish
-  - unzip glassfish-4.0.zip
+  - unzip -q glassfish-4.0.zip
   - echo Add GlassFish to PATH
   - export PATH=$PATH:$TRAVIS_BUILD_DIR/glassfish4/bin
   - echo Download the GlassFish Setup script
@@ -25,3 +25,6 @@ before_install:
 cache:
   directories:
     - $HOME/.m2
+
+after_failure:
+  - cat glassfish4/glassfish/domains/localhost/logs/*.log
