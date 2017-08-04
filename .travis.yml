@@ -8,8 +8,6 @@ service:
 
 before_install:
   - sudo apt-get install -y libmysql-java unzip
-
-before_script:
   - echo Downloading GlassFish
   - wget http://download.java.net/glassfish/4.0/release/glassfish-4.0.zip
   - echo Unzipping GlassFish
@@ -22,3 +20,7 @@ before_script:
   - wget https://icatproject.org/misc/scripts/setup-glassfish.py
   - echo Run the GlassFish Setup script
   - python setup-glassfish.py localhost 75% ''
+
+cache:
+  directories:
+    - $HOME/.m2
