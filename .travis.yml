@@ -14,12 +14,12 @@ before_install:
   - unzip glassfish-4.0.zip
   - echo Add GlassFish to PATH
   - export PATH=$PATH:$TRAVIS_BUILD_DIR/glassfish4/bin
-  - echo Copy the MySQL connector
-  - cp /usr/share/java/mysql-connector-java.jar $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/lib/ext/
   - echo Download the GlassFish Setup script
   - wget https://icatproject.org/misc/scripts/setup-glassfish.py
   - echo Run the GlassFish Setup script
   - python setup-glassfish.py localhost 75% ''
+  - echo Copy the MySQL connector
+  - cp /usr/share/java/mysql-connector-java.jar $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/lib/ext/
 
 cache:
   directories:
