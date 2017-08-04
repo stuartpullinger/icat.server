@@ -29,7 +29,7 @@ before_script:
   - asadmin start-domain localhost
 
 script:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -X
+  - mvn install -Dmaven.javadoc.skip=true -B -V -X
 
 cache:
   directories:
