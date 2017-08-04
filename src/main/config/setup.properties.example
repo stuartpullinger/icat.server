@@ -1,7 +1,7 @@
 # Glassfish
 secure         = true
 container      = Glassfish
-home           = /home/fisher/pf/glassfish4
+home           = /home/travis/build/stuartpullinger/icat.server/glassfish4
 port           = 4848
 
 # WildFly
@@ -25,7 +25,7 @@ port           = 4848
 db.driver      = com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 !db.driver     = mysql-connector-java-5.1.30-bin.jar_com.mysql.jdbc.Driver_5_1
 db.url         = jdbc:mysql://localhost:3306/icat
-db.username    = icat
+db.username    = root
 db.password    = secret
 
 # Optional MySQL
