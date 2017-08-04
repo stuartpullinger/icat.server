@@ -31,9 +31,9 @@ before_script:
 script:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -X
 
-#cache:
-#  directories:
-#    - $HOME/.m2/repository
+cache:
+  directories:
+    - $HOME/.m2/repository
 
 after_failure:
   - cat $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/logs/*.log
