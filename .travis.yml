@@ -7,7 +7,8 @@ service:
   - mysql
 
 before_install:
-  - sudo apt-get install -y libmysql-java unzip
+  - sudo apt-get install -y libmysql-java
+  - echo "USE mysql; UPDATE user SET password=PASSWORD('secret') WHERE user='root'; FLUSH PRIVILEGES; " | mysql -u root
   - echo Downloading GlassFish
   - wget http://download.java.net/glassfish/4.0/release/glassfish-4.0.zip
   - echo Unzipping GlassFish
@@ -17,7 +18,7 @@ before_install:
   - echo Download the GlassFish Setup script
   - wget https://icatproject.org/misc/scripts/setup-glassfish.py
   - echo Run the GlassFish Setup script
-  - python setup-glassfish.py localhost 75% ''
+  - python setup-glassfish.py localhost 75% 'secret'
   - echo Copy the MySQL connector
   - cp /usr/share/java/mysql-connector-java.jar $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/lib/ext/
 
