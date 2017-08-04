@@ -1,5 +1,24 @@
 language: java
+
 jdk:
   - oraclejdk8
-  - oraclejdk7
-  - openjdk7
+
+service:
+  - mysql
+
+before_install:
+  - sudo apt-get install -y libmysql-java unzip
+
+before_script:
+  - echo Downloading GlassFish
+  - wget http://download.java.net/glassfish/4.0/release/glassfish-4.0.zip
+  - echo Unzipping GlassFish
+  - unzip glassfish-4.0.zip
+  - echo Add GlassFish to PATH
+  - export PATH=$PATH:$TRAVIS_BUILD_DIR/glassfish4/bin
+  - echo Copy the MySQL connector
+  - cp /usr/share/java/mysql-connector-java.jar $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/lib/ext/
+  - echo Download the GlassFish Setup script
+  - wget https://icatproject.org/misc/scripts/setup-glassfish.py
+  - echo Run the GlassFish Setup script
+  - python setup-glassfish.py localhost 75% ''
