@@ -29,4 +29,4 @@ cache:
     - $HOME/.m2
 
 after_failure:
-  - cat glassfish4/glassfish/domains/localhost/logs/*.log
+  - cat $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/logs/*.log
