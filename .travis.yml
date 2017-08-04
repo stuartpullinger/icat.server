@@ -6,7 +6,10 @@ jdk:
 service:
   - mysql
 
-before_install:
+install:
+  - echo Skipping Install
+
+before_script:
   - sudo apt-get install -y libmysql-java
   - echo "USE mysql; UPDATE user SET password=PASSWORD('secret') WHERE user='root'; FLUSH PRIVILEGES; " | mysql -u root
   - echo Downloading GlassFish
@@ -24,9 +27,12 @@ before_install:
   - asadmin stop-domain localhost
   - asadmin start-domain localhost
 
+script:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
 cache:
   directories:
-    - $HOME/.m2
+    - $HOME/.m2/repository
 
 after_failure:
   - cat $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/logs/*.log
