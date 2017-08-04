@@ -21,6 +21,8 @@ before_install:
   - python setup-glassfish.py localhost 75% 'secret'
   - echo Copy the MySQL connector
   - cp /usr/share/java/mysql-connector-java.jar $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/lib/ext/
+  - asadmin stop-domain localhost
+  - asadmin start-domain localhost
 
 cache:
   directories:
