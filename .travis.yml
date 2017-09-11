@@ -12,7 +12,7 @@ install:
 
 before_script:
   - sudo apt-get install -y libmysql-java
-  - mysql -u root -e "USE mysql; UPDATE user SET password=PASSWORD('secret') WHERE user='root'; FLUSH PRIVILEGES; "
+  - mysql -u root -e "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES; "
   - echo Downloading GlassFish
   - wget http://download.java.net/glassfish/4.0/release/glassfish-4.0.zip
   - echo Unzipping GlassFish
@@ -22,11 +22,36 @@ before_script:
   - echo Download the GlassFish Setup script
   - wget https://icatproject.org/misc/scripts/setup-glassfish.py
   - echo Run the GlassFish Setup script
-  - python setup-glassfish.py localhost 75% 'secret'
-  - echo Copy the MySQL connector
+  - python setup-glassfish.py localhost 75% 'password'
+  - echo Copy the MySQL connector and restart Glassfish
   - cp /usr/share/java/mysql-connector-java.jar $TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/localhost/lib/ext/
   - asadmin stop-domain localhost
   - asadmin start-domain localhost
+  - echo Downloading Authn.db
+  - wget https://repo.icatproject.org/repo/org/icatproject/authn.db/2.0.0/authn.db-2.0.0-distro.zip
+  - echo Unzipping Authn.db
+  - unzip -q authn.db-2.0.0-distro.zip
+  - cd authn.db
+  - echo Creating config files
+  - |
+    echo "#Glassfish
+    secure = false
+    container = Glassfish
+    home = $TRAVIS_BUILD_DIR/glassfish4
+    port = 4848
+    # MySQL
+    db.target      = mysql
+    db.driver      = com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+    db.url         = jdbc:mysql://127.0.0.1:3306/icat
+    db.username    = root
+    db.password    = password" > setup.properties
+  - |
+    echo "ip =127.0.0.1/32
+    mechanism = db" > run.properties
+  - ./setup install
+  - cd $TRAVIS_BUILD_DIR
+  - mysql -u root --password=password -e "INSERT INTO PASSWD (username, password) VALUES ('notroot', 'password'), ('piOne', 'piOne'), ('piTwo', 'piTwo'), ('guest', 'guess');"
+  
 
 script:
   - mvn install -Dmaven.javadoc.skip=true -B -V -X
