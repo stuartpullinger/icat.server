@@ -45,9 +45,7 @@ before_script:
     db.url         = jdbc:mysql://127.0.0.1:3306/icat
     db.username    = root
     db.password    = password" > setup.properties
-  - |
-    echo "ip =127.0.0.1/32
-    mechanism = db" > run.properties
+  - printf "ip =127.0.0.1/32\nmechanism = db" > run.properties
   - ./setup install
   - cd $TRAVIS_BUILD_DIR
   - mysql -u root --password=password -e "INSERT INTO PASSWD (username, password) VALUES ('notroot', 'password'), ('piOne', 'piOne'), ('piTwo', 'piTwo'), ('guest', 'guess');"
