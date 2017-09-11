@@ -50,10 +50,29 @@ before_script:
   - ./setup install
   - cd $TRAVIS_BUILD_DIR
   - mysql --user=root --password=password --execute="INSERT INTO PASSWD (userName, encodedPassword) VALUES ('notroot', 'password'), ('piOne', 'piOne'), ('piTwo', 'piTwo'), ('guest', 'guess');" icat
-  
-
+  - echo Downloading icat.lucene
+  - wget https://repo.icatproject.org/repo/org/icatproject/icat.lucene/1.0.0/icat.lucene-1.0.0-distro.zip
+  - echo Unzipping icat.lucene
+  - unzip -q icat.lucene-1.0.0-distro.zip
+  - echo Creating data directory for icat.lucene
+  - mkdir lucene
+  - echo Configuring icat.lucene
+  - cd icat.lucene
+  - |
+    echo "#Glassfish
+    secure = false
+    container = Glassfish
+    home = $TRAVIS_BUILD_DIR/glassfish4
+    port = 4848" > setup.properties
+  - |
+    echo "directory = $TRAVIS_BUILD_DIR/lucene
+    commitSeconds = 5
+    ip = 127.0.0.1/32" > run.properties
+  - ./setup install
+  - cd $TRAVIS_BUILD_DIR
+    
 script:
-  - mvn install -Dmaven.javadoc.skip=true -B -V -X
+  - mvn install -Dmaven.javadoc.skip=true -B -V -DserverUrl=http://127.0.0.1:8080 -D luceneUrl=http://127.0.0.1:8080 -Djavax.net.ssl.trustStore=$TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/domain1/config/cacerts.jks -DcontainerHome=$TRAVIS_BUILD_DIR/glassfish4
 
 cache:
   directories:
