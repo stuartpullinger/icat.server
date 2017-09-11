@@ -13,6 +13,7 @@ install:
 before_script:
   - sudo apt-get install -y libmysql-java
   - mysql -u root -e "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES; "
+  - mysqladmin --user=root --password=password create icat
   - echo Downloading GlassFish
   - wget http://download.java.net/glassfish/4.0/release/glassfish-4.0.zip
   - echo Unzipping GlassFish
