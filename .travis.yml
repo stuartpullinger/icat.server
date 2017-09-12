@@ -49,7 +49,7 @@ before_script:
   - printf "ip =127.0.0.1/32\nmechanism = db" > run.properties
   - ./setup install
   - cd $TRAVIS_BUILD_DIR
-  - mysql --user=root --password=password --execute="INSERT INTO PASSWD (userName, encodedPassword) VALUES ('notroot', 'password'), ('piOne', 'piOne'), ('piTwo', 'piTwo'), ('guest', 'guess');" icat
+  - mysql --user=root --password=password --execute="INSERT INTO PASSWD (userName, encodedPassword) VALUES ('notroot', 'password'), ('piOne', 'piOne'), ('piTwo', 'piTwo'), ('guest', 'guess'), ('root', 'password');" icat
   - echo Downloading icat.lucene
   - wget https://repo.icatproject.org/repo/org/icatproject/icat.lucene/1.0.0/icat.lucene-1.0.0-distro.zip
   - echo Unzipping icat.lucene
