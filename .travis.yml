@@ -72,7 +72,7 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
     
 script:
-  - mvn install -Dmaven.javadoc.skip=true -B -V -DserverUrl=http://127.0.0.1:8080 -D luceneUrl=http://127.0.0.1:8080 -Djavax.net.ssl.trustStore=$TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/domain1/config/cacerts.jks -DcontainerHome=$TRAVIS_BUILD_DIR/glassfish4
+  - mvn install -Dmaven.javadoc.skip=true -B -V -DserverUrl=http://127.0.0.1:8080 -DluceneUrl=http://127.0.0.1:8080 -Djavax.net.ssl.trustStore=$TRAVIS_BUILD_DIR/glassfish4/glassfish/domains/domain1/config/cacerts.jks -DcontainerHome=$TRAVIS_BUILD_DIR/glassfish4
 
 cache:
   directories:
